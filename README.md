@@ -1,70 +1,80 @@
-# Getting Started with Create React App
+# Chatbot Widget
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a customizable chatbot widget that can be easily integrated into any React application as an iframe.
 
-## Available Scripts
+## Installation
 
-In the project directory, you can run:
+1. Include the chatbot library in your project:
 
-### `npm start`
+   ```html
+   <script src="https://path-to-your-hosted-library/chatbot-widget.js"></script>
+   ```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Replace https://path-to-your-hosted-library/chatbot-widget.js with the actual URL where your chatbot library is hosted.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+2. Make sure you have React and ReactDOM included in your project:
 
-### `npm test`
+```
+<script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Usage
+As an iframe
+To use the chatbot as an iframe in your React application:
 
-### `npm run build`
+Create an HTML file (e.g., chatbot.html) that initializes the chatbot:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Widget</title>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
+    <script src="https://path-to-your-hosted-library/chatbot-widget.js"></script>
+</head>
+<body>
+    <div id="chatbot-container"></div>
+    <script>
+        ChatbotWidget.init('chatbot-container');
+    </script>
+</body>
+</html>
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. Host this HTML file on a server or CDN.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. In your React application, embed the chatbot using an iframe:
 
-### `npm run eject`
+```
+function App() {
+  return (
+    <div>
+      <h1>My React App</h1>
+      <iframe 
+        src="https://your-hosted-chatbot-url/chatbot.html" 
+        width="400" 
+        height="600" 
+        frameBorder="0"
+        title="Chatbot"
+      ></iframe>
+    </div>
+  );
+}
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Replace https://your-hosted-chatbot-url/chatbot.html with the actual URL where you've hosted the chatbot HTML file.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Customization
+You can customize the appearance of the chatbot by modifying the CSS in the chatbot library. If you need to pass custom configurations, you can extend the ChatbotWidget.init() function to accept parameters.
+Development
+If you want to modify the chatbot widget:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Clone this repository
+Install dependencies: npm install
+Make your changes in the src directory
+Build the library: npm run build
+The built library will be in the dist directory
