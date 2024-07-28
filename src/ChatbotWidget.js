@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ChatWidget from './components/ChatWidget';
 
-class ChatbotWidget {
+export class ChatbotWidget {
   static init(containerId) {
     const container = document.getElementById(containerId);
     if (container) {
@@ -10,5 +10,3 @@ class ChatbotWidget {
     }
   }
 }
-
-export default ChatbotWidget;
