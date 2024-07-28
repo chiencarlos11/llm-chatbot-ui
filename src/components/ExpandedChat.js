@@ -26,6 +26,7 @@ function ExpandedChat({ onClose }) {
   }, [messages]);
 
   const detectAndFormatCode = (text) => {
+    console.log("inside the format function = " + text)
     const codeRegex = /```(\w+)?\s*([\s\S]*?)```/g;
     let formattedText = text;
     let match;
@@ -37,19 +38,38 @@ function ExpandedChat({ onClose }) {
       formattedText = formattedText.replace(match[0], `<pre><code class="language-${language}">${highlightedCode}</code></pre>`);
     }
 
+    console.log("after processing format function = " + text)
     return formattedText;
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (input.trim()) {
       const formattedInput = detectAndFormatCode(input);
       setMessages(prevMessages => [...prevMessages, { text: formattedInput, sender: 'user' }]);
       setInput('');
-      // Here you would typically call your AI service to get a response
-      // For now, we'll just echo the message back
-      setTimeout(() => {
-        setMessages(prevMessages => [...prevMessages, { text: `You said: ${formattedInput}`, sender: 'bot' }]);
-      }, 1000);
+  
+      try {
+        const response = await fetch('http://localhost:3001/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ 
+            messages: [{ role: "user", content: input }] // Use original input here, not formattedInput
+          }),
+        });
+  
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+  
+        const data = await response.json();
+        const formattedReply = detectAndFormatCode(data['choices'][0]['message']['content']);
+        setMessages(prevMessages => [...prevMessages, { text: formattedReply, sender: 'bot' }]);
+      } catch (error) {
+        console.error('Error:', error);
+        setMessages(prevMessages => [...prevMessages, { text: 'Sorry, there was an error processing your request.', sender: 'bot' }]);
+      }
     }
   };
 
